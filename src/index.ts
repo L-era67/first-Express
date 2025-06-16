@@ -1,4 +1,5 @@
-import express from "express";
+import express, { Request, Response } from "express";
+import { User } from "./types/types";
 
 const app = express();
 const port = 4200;
@@ -11,13 +12,23 @@ app.get("/", (req, res) => {
   });
 });
 
-app.post("/user", (req, res) => {
-
+app.post("/user", (req: Request, res: Response) => {
   console.log("post req", req.body);
 
   const { name, age } = req.body;
-//   res.send("Successfully created user")
+  //   res.send("Successfully created user")
   res.json({ message: `User ${name} is ${age}` });
+});
+
+app.put("/updateUser", (req: Request, res: Response) => {
+  const { name, age }: { name: string; age: string } = req.body;
+  res.send(`updated user ${name} ${age}`);
+});
+
+//Create user
+app.post("/creatUser", (req: Request, res: Response) => {
+  const { name, age, userName, userEmail, phoneNumber, password }: User =
+    req.body;
 });
 
 app.listen(port, () => {
