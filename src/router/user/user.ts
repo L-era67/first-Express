@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import fs, { existsSync } from "fs-extra";
 import { User } from "../../types/types";
+import { nanoid } from "nanoid";
 
 const userRouter = express.Router();
 
@@ -22,7 +23,7 @@ userRouter.post("/createUser", (req: Request, res: Response) => {
   const { name, age, userName, userEmail, phoneNumber, password }: User =
     req.body;
 
-  const uniqueId = Math.random();
+  const uniqueId = nanoid();
 
   const filePath = "./user.json";
 
@@ -51,26 +52,24 @@ userRouter.post("/createUser", (req: Request, res: Response) => {
   res.send("Amjjilttai burtgegdew");
 });
 
-
 userRouter.delete("/deleteUser", (req: Request, res: Response) => {
-    const {userId} :{userId:number}= req.body;
-    console.log("ID", userId);
-    
+  const filePathChange = "./user.json";
+  const { userId }: { userId: string } = req.body;
+  console.log("ID", userId);
+
   const users = fs.readFileSync("./user.json", "utf8");
 
-  console.log(  "DELETED ID USERS", users); //ID-GUIGEER BUSAD NI HEWLEGDEJ BAINA
-
   const arrayUsers = JSON.parse(users);
-  console.log(typeof arrayUsers);
+  //   console.log(typeof arrayUsers);
 
-  
-  const deletedUser = arrayUsers.filter((delete:any)=> delete.userId !== userId);
-console.log(deletedUser);
+  const deletedUser = arrayUsers.filter((del: any) => del.userId !== userId);
+  console.log("deleted user id", deletedUser);
 
-//   res.json(JSON.parse(users))
+  fs.writeFileSync(filePathChange, JSON.stringify(deletedUser, null,2)); //=>\"userId\": 0.5728839187055177,\n  user.json dr ingej gargaj irj bnda
 
-//   res.send(`deleted id ${deleteId.userId}`)
+res.send("Ustagalaa")
 
+  //   res.send(`deleted id ${deleteId.userId}`)
 });
 
 // userRouter.put("/updateUser", (req: Request, res: Response) => {
