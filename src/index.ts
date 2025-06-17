@@ -18,22 +18,6 @@ app.get("/", (req:Request, res:Response) => {
   });
 });
 
-
-//Create user
-
-
-// app.get("/users", (req:Request, res:Response)=>{
-
-  
-//   const users = fs.readFileSync("./user.json", {encoding: "utf8", flag:"r"});
-//   console.log("users", users);
-  
-//   res.json(JSON.parse(users));
-// })
-
-// app.delete("/delete", (req:Request, res:Response)=>{})
-
-
 app.listen(port, () => {
   console.log(`Example app listening on port http://localhost:${port}`);
 });
